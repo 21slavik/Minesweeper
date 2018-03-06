@@ -12,7 +12,7 @@ void setup ()
     textAlign(CENTER,CENTER);
     
     // make the manager
-    Interactive.make( this );
+
     buttons = new MSButton [rows] [columns];
     bombs = new ArrayList <MSButton>();
     //your code to declare and initialize buttons goes here
@@ -22,8 +22,12 @@ void setup ()
             buttons[j][i]= new MSButton(j,i);
     }
 }
+    
+    
+    setBombs();
+}
 public void setBombs()
-{  for (int i = 0; i < 10; i++) {
+{  for (int i = 0; i < 40; i++) {
     final int r1 = (int)(Math.random()*20);
     final int r2 = (int)(Math.random()*20);
     if ((bombs.contains (buttons[r1][r2])) == false) {
@@ -32,16 +36,20 @@ public void setBombs()
     else {i +=-1;}
 }
 }
+
 public void draw ()
 {
     background( 0 );
     if(isWon())
         displayWinningMessage();
+        
     for (int i = 0; i < rows; i++) {
      for (int j = 0; j < columns; j++) {
         buttons[i][j].draw();
       } 
     }
+    //end
+    
 }
 public boolean isWon()
 {  
@@ -55,14 +63,14 @@ public void displayLosingMessage()
         if(bombs.get(i).isClicked()==false)
             bombs.get(i).mousePressed();
     isLost = true;
-    buttons[rows/2][(columns/2)-4].setLabel("Y");
-    buttons[rows/2][(columns/2)-3].setLabel("O");
-    buttons[rows/2][(columns/2-2)].setLabel("U");
-    buttons[rows/2][(columns/2-1)].setLabel("");
-    buttons[rows/2][(columns/2)].setLabel("L");
-    buttons[rows/2][(columns/2+1)].setLabel("O");
-    buttons[rows/2][(columns/2+2)].setLabel("S");
-    buttons[rows/2][(columns/2+3)].setLabel("E");
+    buttons[rows/3][(columns/2)-4].setLabel("Y");
+    buttons[rows/3][(columns/2)-3].setLabel("O");
+    buttons[rows/3][(columns/2-2)].setLabel("U");
+    buttons[rows/3][(columns/2-1)].setLabel("");
+    buttons[rows/2][(columns/2)-4].setLabel("L");
+    buttons[rows/2][(columns/2+1)-4].setLabel("O");
+    buttons[rows/2][(columns/2+2)-4].setLabel("S");
+    buttons[rows/2][(columns/2+3)-4].setLabel("E");
 }
 public void displayWinningMessage()
 {
@@ -77,11 +85,13 @@ public void displayWinningMessage()
     buttons[rows/2][(columns/2+3)].setLabel("!");
 }
 
+//new
 public void mousePressed (){
   int mX = mouseX;
   int mY = mouseY;
   buttons[(int)(mY/20)][(int)(mX/20)].mousePressed();
 }
+//end
 
 public class MSButton
 {
@@ -167,7 +177,7 @@ public class MSButton
             fill(0);
          
          else if( !marked && clicked && bombs.contains(this) ) 
-             fill(255,0,0);
+             fill(100,0,0);
          else if( marked && bombs.contains(this) ) 
              fill(100);
          else if( !marked && clicked && !bombs.contains(this) ) 
@@ -179,7 +189,7 @@ public class MSButton
             fill( 100 );
 
         rect(x, y, width, height);
-        fill(0);
+        fill(50);
         text(label,x+width/2,y+height/2);
     }
     public void setLabel(String newLabel)
@@ -229,5 +239,4 @@ public class MSButton
         return numBombs;
     }
 }
-
 
